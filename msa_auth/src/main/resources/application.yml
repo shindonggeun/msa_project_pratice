@@ -1,0 +1,24 @@
+server:
+  port: 8090
+
+spring:
+  jpa:
+    open-in-view: false
+    defer-datasource-initialization: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop                # ddl ?? ?? ??
+    properties:
+      hibernate:
+        format_sql: true             # ??????? ??? SQL? ??? ? ?? ?? ??
+        use_sql_comments: true
+        show_sql: true               # ??????? ??? SQL? ??
+        jdbc:
+          batch_size: 100              #   insert/update ??? ??? ???? ??? DB? ?? ? ?? ??
+        default_batch_fetch_size: 100
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver  # DB ????
+    url: jdbc:mysql://localhost:3306/msa_auth?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true       # ?????? URL
+    username: ssafy                     # ?????? ???
+    password: ssafy                       # ?????? ?? ????
