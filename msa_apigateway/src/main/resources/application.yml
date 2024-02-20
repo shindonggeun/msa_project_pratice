@@ -1,9 +1,16 @@
+server:
+  port: 8000
+
 spring:
   cloud:
     gateway:
-      mvc:
-        routes:
-          - id: auth-service
-            uri: http://localhost:8090
-            predicates:
-              - path=/api/v1/member/**
+      routes:
+        - id: auth-service  # ???? ???? ?? ???? ??
+          uri: http://localhost:8010
+          predicates:
+            - Path=/api/v1/member/**
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG
