@@ -1,6 +1,7 @@
 package com.ssafy.msa.domain.member.entity;
 
 import com.ssafy.msa.domain.member.entity.enums.MemberRole;
+import com.ssafy.msa.global.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Entity
-public class Member {
+public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
