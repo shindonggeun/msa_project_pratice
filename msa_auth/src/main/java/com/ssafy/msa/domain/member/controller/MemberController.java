@@ -1,5 +1,6 @@
 package com.ssafy.msa.domain.member.controller;
 
+import com.ssafy.msa.domain.member.dto.MemberInfoRecord;
 import com.ssafy.msa.domain.member.dto.MemberLoginRequestRecord;
 import com.ssafy.msa.domain.member.dto.MemberLoginResponseRecord;
 import com.ssafy.msa.domain.member.dto.MemberSignupRequestDto;
@@ -10,10 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,5 +35,11 @@ public class MemberController {
         accessTokenCookie.setMaxAge(3600); // 60분(3600초)으로 설정 (3600)
         response.addCookie(accessTokenCookie);
         return ResponseEntity.ok().body(Message.success(loginResponse));
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<Message<MemberInfoRecord>> getMember(@RequestHeader Long memberId) {
+        MemberInfoRecord info = memberService.getMember(memberId);
+        return ResponseEntity.ok().body(Message.success(info));
     }
 }

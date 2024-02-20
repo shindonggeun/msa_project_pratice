@@ -1,5 +1,6 @@
 package com.ssafy.msa.domain.member.service;
 
+import com.ssafy.msa.domain.member.dto.MemberInfoRecord;
 import com.ssafy.msa.domain.member.dto.MemberLoginRequestRecord;
 import com.ssafy.msa.domain.member.dto.MemberLoginResponseRecord;
 import com.ssafy.msa.domain.member.dto.MemberSignupRequestDto;
@@ -34,5 +35,18 @@ public class MemberServiceImpl implements MemberService {
         // Spring security PasswordEncoder 이용해서 비밀번호 검증 로직 이용
 
         return jwtTokenService.issueAndSaveTokens(member);
+    }
+
+    @Override
+    public MemberInfoRecord getMember(Long memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(()
+        -> new RuntimeException("해당 회원을 찾을 수 없습니다."));
+
+        return MemberInfoRecord.builder() // 회원 정보 반환
+                .id(member.getId())
+                .email(member.getEmail())
+                .name(member.getName())
+                .role(member.getRole())
+                .build();
     }
 }
