@@ -1,13 +1,10 @@
-package com.ssafy.msa.component.jwt;
+package com.ssafy.msa.global.component.jwt;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.msa.component.jwt.exception.JwtErrorCode;
-import com.ssafy.msa.component.jwt.exception.JwtException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
+import com.ssafy.msa.global.component.jwt.exception.JwtErrorCode;
+import com.ssafy.msa.global.component.jwt.exception.JwtException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,8 +36,10 @@ public class JwtTokenVerifier {
 
         } catch (ExpiredJwtException e) {
             throw new JwtException(JwtErrorCode.EXPIRED_TOKEN);
-        } catch (MalformedJwtException | SecurityException | IllegalArgumentException e) {
+        } catch (MalformedJwtException | SecurityException | IllegalArgumentException  e) {
             throw new JwtException(JwtErrorCode.INVALID_TOKEN);
+        } catch (SignatureException e) {
+            throw new JwtException(JwtErrorCode.SIGNATURE_INVALID);
         }
 
         return payload;

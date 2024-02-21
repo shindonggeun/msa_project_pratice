@@ -1,4 +1,4 @@
-package com.ssafy.msa.component.jwt.exception;
+package com.ssafy.msa.global.component.jwt.exception;
 
 import lombok.Getter;
 
