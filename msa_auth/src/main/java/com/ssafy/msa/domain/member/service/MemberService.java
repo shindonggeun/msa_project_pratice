@@ -11,4 +11,6 @@ public interface MemberService {
     MemberLoginResponseRecord loginMember(MemberLoginRequestRecord loginRequest);
 
     MemberInfoRecord getMember(Long memberId);
+
+    void deleteMember(Long memberId);
 }

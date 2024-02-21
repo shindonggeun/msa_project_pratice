@@ -42,4 +42,10 @@ public class MemberController {
         MemberInfoRecord info = memberService.getMember(memberId);
         return ResponseEntity.ok().body(Message.success(info));
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Message<Void>> deleteMember(@RequestHeader Long memberId) {
+        memberService.deleteMember(memberId);
+        return ResponseEntity.ok().body(Message.success());
+    }
 }

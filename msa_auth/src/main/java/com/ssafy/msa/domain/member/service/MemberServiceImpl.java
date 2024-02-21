@@ -49,4 +49,10 @@ public class MemberServiceImpl implements MemberService {
                 .role(member.getRole())
                 .build();
     }
+
+    @Override
+    public void deleteMember(Long memberId) {
+        memberRepository.deleteById(memberId);
+    }
+
 }
