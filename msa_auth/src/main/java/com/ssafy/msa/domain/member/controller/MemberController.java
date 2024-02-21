@@ -6,11 +6,14 @@ import com.ssafy.msa.domain.member.dto.MemberLoginResponseRecord;
 import com.ssafy.msa.domain.member.dto.MemberSignupRequestDto;
 import com.ssafy.msa.domain.member.service.MemberService;
 import com.ssafy.msa.global.common.dto.Message;
+import com.ssafy.msa.global.component.security.dto.MemberLoginActiveRecord;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,14 +41,16 @@ public class MemberController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<Message<MemberInfoRecord>> getMember(@RequestHeader Long memberId) {
-        MemberInfoRecord info = memberService.getMember(memberId);
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+    public ResponseEntity<Message<MemberInfoRecord>> getMember(@AuthenticationPrincipal MemberLoginActiveRecord loginActive) {
+        MemberInfoRecord info = memberService.getMember(loginActive.id());
         return ResponseEntity.ok().body(Message.success(info));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Message<Void>> deleteMember(@RequestHeader Long memberId) {
-        memberService.deleteMember(memberId);
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+    public ResponseEntity<Message<Void>> deleteMember(@AuthenticationPrincipal MemberLoginActiveRecord loginActive) {
+        memberService.deleteMember(loginActive.id());
         return ResponseEntity.ok().body(Message.success());
     }
 }
